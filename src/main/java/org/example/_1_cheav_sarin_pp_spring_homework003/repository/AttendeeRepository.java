@@ -1,11 +1,8 @@
 package org.example._1_cheav_sarin_pp_spring_homework003.repository;
 
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Result;
-import org.apache.ibatis.annotations.Results;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 import org.example._1_cheav_sarin_pp_spring_homework003.Model.enity.Attendee;
+import org.example._1_cheav_sarin_pp_spring_homework003.Model.request.AttendeeRequest;
 
 import java.util.List;
 
@@ -23,4 +20,23 @@ public interface AttendeeRepository {
     """)
     List<Attendee> findAllAttendeeWithPagination(@Param("page") Integer page,
                                                  @Param("size") Integer size);
+
+    @Select("""
+        SELECT * FROM attendees
+        WHERE attendee_id = #{attendeeId}
+        """)
+    @Results({
+            @Result(property = "attendeeId", column = "attendee_id"),
+            @Result(property = "attendeeName", column = "attendee_name"),
+            @Result(property = "email", column = "email")
+    })
+    Attendee getAttendeeById(@Param("attendeeId") Integer attendeeId);
+    @ResultMap("attendeeMapper")
+    @Select("""
+        INSERT INTO attendees (attendee_name, email)
+        VALUES (#{attendeeName}, #{email})
+        RETURNING *;
+        """)
+    Attendee saveAttendee(AttendeeRequest attendeeRequest);
 }
+
