@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface VenueService {
     List<Venue> getAllVenue(Integer page, Integer size);
+
+    Venue getVenueById(Integer venueId);
 }

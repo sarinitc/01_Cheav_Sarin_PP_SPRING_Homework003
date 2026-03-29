@@ -27,4 +27,10 @@ public class VenueServiceImpl implements VenueService {
 
         return venueRepository.findAllVenueWithPagination(page, size);
     }
+
+    @Override
+    public Venue getVenueById(Integer venueId) {
+        return venueRepository.getVenueById(venueId);
+
+    }
 }

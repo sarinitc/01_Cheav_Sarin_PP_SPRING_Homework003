@@ -3,12 +3,9 @@ package org.example._1_cheav_sarin_pp_spring_homework003.repository;
 import org.apache.ibatis.annotations.*;
 import org.example._1_cheav_sarin_pp_spring_homework003.Model.enity.Attendee;
 import org.example._1_cheav_sarin_pp_spring_homework003.Model.request.AttendeeRequest;
-
 import java.util.List;
-
 @Mapper
 public interface AttendeeRepository {
-
     @Results(id = "attendeeMapper", value = {
             @Result(property = "attendeeId", column = "attendee_id"),
             @Result(property = "attendeeName", column = "attendee_name"),
@@ -20,7 +17,6 @@ public interface AttendeeRepository {
     """)
     List<Attendee> findAllAttendeeWithPagination(@Param("page") Integer page,
                                                  @Param("size") Integer size);
-
     @Select("""
         SELECT * FROM attendees
         WHERE attendee_id = #{attendeeId}
@@ -47,16 +43,10 @@ public interface AttendeeRepository {
     int updateAttendee(@Param("id") Integer attendeeId,
                        @Param("req") AttendeeRequest attendeeRequest);
 
-
-
-
     @Delete("""
     DELETE FROM attendees
    WHERE attendee_id = #{id}
 """)
     void deleteAttendeeById(Integer attendeeId);
-
-
-
 }
 

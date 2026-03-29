@@ -26,6 +26,7 @@ if  (size == null || size <=0){
     }
     @Override
     public Attendee getAttendeeById(Integer attendeeId) {
+
         return attendeeRepository.getAttendeeById(attendeeId);
     }
 

@@ -21,4 +21,14 @@ public interface VenueRepository {
     """)
     List<Venue> findAllVenueWithPagination(@Param("page") Integer page,
                                                  @Param("size") Integer size);
+    @Select("""
+        SELECT * FROM venues
+        WHERE venue_id = #{venueId}
+        """)
+    @Results({
+            @Result(property = "venueId", column = "venue_id"),
+            @Result(property = "venueName", column = "venue_name"),
+            @Result(property = "location", column = "location")
+    })
+    Venue getVenueById(@Param("venueId") Integer venueId);
 }
