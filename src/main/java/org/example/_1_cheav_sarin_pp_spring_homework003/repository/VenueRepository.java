@@ -37,4 +37,18 @@ public interface VenueRepository {
         RETURNING *;
         """)
     Venue saveVenue(VenueRequest venueRequest);
+
+    @Update("""
+    UPDATE venues
+    SET venue_name = #{req.venueName},
+        location = #{req.location}
+    WHERE venue_id = #{id}
+""")
+    int updateVenue(@Param("id") Integer venueId,
+                       @Param("req") VenueRequest venueRequest);
+    @Delete("""
+    DELETE FROM venues
+   WHERE venue_id = #{id}
+""")
+    void deleteVenueById(Integer venueId);
 }

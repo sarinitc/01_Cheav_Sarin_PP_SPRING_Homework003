@@ -30,8 +30,8 @@ public class AttendeeController {
                 .build();
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
-    @GetMapping("/{attendees-id}")
-    public ResponseEntity<ApiResponse<Attendee>> getAttendeeById(@PathVariable(name = "attendees-id") Integer attendeeId) {
+    @GetMapping("/{attendeesId}")
+    public ResponseEntity<ApiResponse<Attendee>> getAttendeeById(@PathVariable(name = "attendeesId") Integer attendeeId) {
         Attendee attendee = attendeeService.getAttendeeById(attendeeId);
         if (attendee != null) {
             ApiResponse<Attendee> response = ApiResponse.<Attendee>builder()
@@ -65,9 +65,9 @@ public class AttendeeController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-    @PutMapping("/{attendees-id}")
+    @PutMapping("/{attendeesId}")
     public ResponseEntity<ApiResponse<Attendee>> updateAttendee(
-            @PathVariable("attendees-id") Integer attendeeId,
+            @PathVariable("attendeesId") Integer attendeeId,
             @RequestBody AttendeeRequest attendeeRequest) {
 
         Attendee attendee = attendeeService.updateAttendee(attendeeId,attendeeRequest);
@@ -80,9 +80,9 @@ public class AttendeeController {
                 .build();
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
-    @DeleteMapping("/{attendees-id}")
+    @DeleteMapping("/{attendeesId}")
     public ResponseEntity<ApiResponse<String>> deleteAttendee(
-            @PathVariable("attendees-id") Integer attendeeId) {
+            @PathVariable("attendeesId") Integer attendeeId) {
 
         Boolean isSuccess = attendeeService.deleteAttendeeById(attendeeId);
         String statusCode = isSuccess? "200": "404";

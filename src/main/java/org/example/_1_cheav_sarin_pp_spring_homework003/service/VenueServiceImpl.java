@@ -42,4 +42,19 @@ public class VenueServiceImpl implements VenueService {
             return  venueRepository.saveVenue(venueRequest);
         }
 
+    @Override
+    public Venue updateVenue(Integer venueId, VenueRequest venueRequest) {
+            venueRepository.updateVenue(venueId, venueRequest);
+            return venueRepository.getVenueById(venueId);
+        }
+
+    @Override
+    public Boolean deleteVenueById(Integer venueId) {
+            Venue venue = venueRepository.getVenueById(venueId);
+            if (venue == null){return false;}
+            venueRepository.deleteVenueById(venueId);
+            return true;
+        }
     }
+
+

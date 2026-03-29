@@ -13,4 +13,8 @@ public interface VenueService {
     Venue getVenueById(Integer venueId);
 
     Venue createVenue(VenueRequest venueRequest);
+
+    Venue updateVenue(Integer venueId, VenueRequest venueRequest);
+
+    Boolean deleteVenueById(Integer venueId);
 }
