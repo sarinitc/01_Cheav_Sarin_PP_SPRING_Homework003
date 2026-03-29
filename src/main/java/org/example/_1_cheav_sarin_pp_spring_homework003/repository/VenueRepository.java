@@ -1,11 +1,10 @@
 package org.example._1_cheav_sarin_pp_spring_homework003.repository;
 
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Result;
-import org.apache.ibatis.annotations.Results;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 import org.example._1_cheav_sarin_pp_spring_homework003.Model.enity.Attendee;
 import org.example._1_cheav_sarin_pp_spring_homework003.Model.enity.Venue;
+import org.example._1_cheav_sarin_pp_spring_homework003.Model.request.AttendeeRequest;
+import org.example._1_cheav_sarin_pp_spring_homework003.Model.request.VenueRequest;
 
 import java.util.List;
 
@@ -31,4 +30,11 @@ public interface VenueRepository {
             @Result(property = "location", column = "location")
     })
     Venue getVenueById(@Param("venueId") Integer venueId);
+    @ResultMap("venueMapper")
+    @Select("""
+        INSERT INTO venues (venue_name, location)
+        VALUES (#{venueName}, #{location})
+        RETURNING *;
+        """)
+    Venue saveVenue(VenueRequest venueRequest);
 }

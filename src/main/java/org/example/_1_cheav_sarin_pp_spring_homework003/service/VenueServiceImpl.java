@@ -1,7 +1,10 @@
 package org.example._1_cheav_sarin_pp_spring_homework003.service;
 
 import lombok.RequiredArgsConstructor;
+import org.example._1_cheav_sarin_pp_spring_homework003.Model.enity.Attendee;
 import org.example._1_cheav_sarin_pp_spring_homework003.Model.enity.Venue;
+import org.example._1_cheav_sarin_pp_spring_homework003.Model.request.AttendeeRequest;
+import org.example._1_cheav_sarin_pp_spring_homework003.Model.request.VenueRequest;
 import org.example._1_cheav_sarin_pp_spring_homework003.exception.BadRequestException;
 import org.example._1_cheav_sarin_pp_spring_homework003.repository.VenueRepository;
 import org.example._1_cheav_sarin_pp_spring_homework003.service.Impl.VenueService;
@@ -33,4 +36,10 @@ public class VenueServiceImpl implements VenueService {
         return venueRepository.getVenueById(venueId);
 
     }
-}
+
+    @Override
+    public Venue createVenue(VenueRequest venueRequest) {
+            return  venueRepository.saveVenue(venueRequest);
+        }
+
+    }
