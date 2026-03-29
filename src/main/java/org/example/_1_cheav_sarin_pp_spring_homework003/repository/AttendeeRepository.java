@@ -38,5 +38,25 @@ public interface AttendeeRepository {
         RETURNING *;
         """)
     Attendee saveAttendee(AttendeeRequest attendeeRequest);
+    @Update("""
+    UPDATE attendees
+    SET attendee_name = #{req.attendeeName},
+        email = #{req.email}
+    WHERE attendee_id = #{id}
+""")
+    int updateAttendee(@Param("id") Integer attendeeId,
+                       @Param("req") AttendeeRequest attendeeRequest);
+
+
+
+
+    @Delete("""
+    DELETE FROM attendees
+   WHERE attendee_id = #{id}
+""")
+    void deleteAttendeeById(Integer attendeeId);
+
+
+
 }
 

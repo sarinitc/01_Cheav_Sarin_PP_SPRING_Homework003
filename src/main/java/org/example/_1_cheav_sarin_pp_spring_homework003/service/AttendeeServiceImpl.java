@@ -33,4 +33,21 @@ if  (size == null || size <=0){
     public Attendee createAttendee(AttendeeRequest attendeeRequest) {
         return  attendeeRepository.saveAttendee(attendeeRequest);
     }
+
+    @Override
+    public Attendee updateAttendee(Integer attendeeId, AttendeeRequest attendeeRequest) {
+        attendeeRepository.updateAttendee(attendeeId, attendeeRequest);
+        return attendeeRepository.getAttendeeById(attendeeId);
+    }
+
+    @Override
+    public Boolean deleteAttendeeById(Integer attendeeId) {
+        System.out.println("Delete Attendee ID: " + attendeeId);
+        Attendee attendee = attendeeRepository.getAttendeeById(attendeeId);
+        if (attendee == null){return false;}
+        attendeeRepository.deleteAttendeeById(attendeeId);
+        return true;
+    }
+
+
 }

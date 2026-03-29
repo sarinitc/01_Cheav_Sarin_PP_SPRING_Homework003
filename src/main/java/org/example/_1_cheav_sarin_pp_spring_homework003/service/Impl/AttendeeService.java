@@ -12,4 +12,9 @@ public interface AttendeeService {
     Attendee getAttendeeById(Integer attendeeId);
 
     Attendee createAttendee(AttendeeRequest attendeeRequest);
+
+
+    Attendee updateAttendee(Integer attendeeId, AttendeeRequest attendeeRequest);
+
+    Boolean deleteAttendeeById(Integer attendeeId);
 }

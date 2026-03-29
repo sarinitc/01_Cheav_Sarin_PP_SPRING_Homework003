@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/v1/attendee")
+@RequestMapping("api/v1/attendees")
 @RequiredArgsConstructor
 public class AttendeeController {
     private final AttendeeService attendeeService;
@@ -30,8 +30,8 @@ public class AttendeeController {
                 .build();
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
-    @GetMapping("/{attendee-id}")
-    public ResponseEntity<ApiResponse<Attendee>> getAttendeeById(@PathVariable(name = "attendee-id") Integer attendeeId) {
+    @GetMapping("/{attendees-id}")
+    public ResponseEntity<ApiResponse<Attendee>> getAttendeeById(@PathVariable(name = "attendees-id") Integer attendeeId) {
         Attendee attendee = attendeeService.getAttendeeById(attendeeId);
         if (attendee != null) {
             ApiResponse<Attendee> response = ApiResponse.<Attendee>builder()
@@ -52,7 +52,6 @@ public class AttendeeController {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
 
     }
-
     @PostMapping
     public ResponseEntity<ApiResponse<Attendee>> createAttendee(@RequestBody AttendeeRequest attendeeRequest) {
         Attendee attendee = attendeeService.createAttendee(attendeeRequest);
@@ -64,4 +63,38 @@ public class AttendeeController {
                 .timestamp(LocalDateTime.now())
                 .build();
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
-    }}
+    }
+
+    @PutMapping("/{attendees-id}")
+    public ResponseEntity<ApiResponse<Attendee>> updateAttendee(
+            @PathVariable("attendees-id") Integer attendeeId,
+            @RequestBody AttendeeRequest attendeeRequest) {
+
+        Attendee attendee = attendeeService.updateAttendee(attendeeId,attendeeRequest);
+
+        ApiResponse<Attendee> response = ApiResponse.<Attendee>builder()
+                .status("Created")
+                .message("Attendee updated successfully")
+                .payload(attendee)
+                .timestamp(LocalDateTime.now())
+                .build();
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+    @DeleteMapping("/{attendees-id}")
+    public ResponseEntity<ApiResponse<String>> deleteAttendee(
+            @PathVariable("attendees-id") Integer attendeeId) {
+
+        Boolean isSuccess = attendeeService.deleteAttendeeById(attendeeId);
+        String statusCode = isSuccess? "200": "404";
+        String msg = isSuccess? "Deleted attendee with id "+ attendeeId  +"successfully":" Attendee not found";
+        ApiResponse<String> response = ApiResponse.<String>builder()
+
+                .status(statusCode)
+                .message(msg)
+//                .payload("Deleted ID: " + attendeeId)
+                .timestamp(LocalDateTime.now())
+                .build();
+
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+}
