@@ -1,5 +1,6 @@
 package org.example._1_cheav_sarin_pp_spring_homework003.Model.response;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,6 +11,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@JsonInclude(JsonInclude.Include.NON_NULL)
 
 public class ApiResponse<T> {
     private LocalDateTime timestamp ;

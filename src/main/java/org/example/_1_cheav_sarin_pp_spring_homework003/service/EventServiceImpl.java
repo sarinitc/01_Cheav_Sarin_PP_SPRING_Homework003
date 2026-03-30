@@ -9,6 +9,8 @@ import org.example._1_cheav_sarin_pp_spring_homework003.exception.BadRequestExce
 import org.example._1_cheav_sarin_pp_spring_homework003.repository.AttendeeRepository;
 import org.example._1_cheav_sarin_pp_spring_homework003.repository.EventRepository;
 import org.example._1_cheav_sarin_pp_spring_homework003.service.Impl.EventService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,27 +19,37 @@ import java.util.List;
 @RequiredArgsConstructor
 public class EventServiceImpl implements EventService {
     private final EventRepository eventRepository;
+    private final Logger logger = LoggerFactory.getLogger(EventServiceImpl.class);
 
     @Override
     public List<Event> getAllEvent(Integer page, Integer size) {
 
-            if(page == null || size <= 0 ){
-                throw new BadRequestException("Page must be grater than 0");
-            }
-            if  (size == null || size <=0){
-                throw new BadRequestException("Size must be grater than 0");
-            }
+
             return eventRepository.findAllEventWithPagination(page, size);
         }
 
     @Override
     public Event getEventById(Integer eventId) {
-        return eventRepository.getEventById(eventId);
+
+        Event event = eventRepository.getEventById(eventId);
+
+        logger.warn("Event: {}", event.toString());
+
+        return event;
     }
 
     @Override
     public Event updateAttendee(Integer eventId, EventRequest eventRequest) {
         eventRepository.updateEvent(eventId, eventRequest);
+        // clean up event attendee by event id
+        eventRepository.deleteAttendeeById(eventId);
+        // recreate event attendee
+        if (eventRequest.getAttendeeId() != null) {
+            for (Integer attendeeId : eventRequest.getAttendeeId()) {
+                eventRepository.insertEventAttendee(eventId, attendeeId);
+            }
+        }
+
         return eventRepository.getEventById(eventId);
     }
 
@@ -50,6 +62,8 @@ public class EventServiceImpl implements EventService {
                 eventRepository.insertEventAttendee(event.getEventId(), attendeeId);
             }
         }
+
+        logger.warn("Event Id: {}", event.getEventId());
 
         return eventRepository.getEventById(event.getEventId());
     }
@@ -64,6 +78,8 @@ public class EventServiceImpl implements EventService {
             System.out.println("Delete event ID: " + eventId);
         Event event = eventRepository.getEventById(eventId);
             if (event == null){return false;}
+            // delete event attendees
+        eventRepository.deleteEventById(eventId);
         eventRepository.deleteEventById(eventId);
             return true;
         }

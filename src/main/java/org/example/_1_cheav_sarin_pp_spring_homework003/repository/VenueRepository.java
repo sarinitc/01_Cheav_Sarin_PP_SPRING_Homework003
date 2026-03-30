@@ -51,4 +51,15 @@ public interface VenueRepository {
    WHERE venue_id = #{id}
 """)
     void deleteVenueById(Integer venueId);
+
+    @Select("""
+        select * from venues where venue_name =  #{venueName};
+        """)
+    @Results({
+            @Result(property = "venueId", column = "venue_id"),
+            @Result(property = "venueName", column = "venue_name"),
+            @Result(property = "location", column = "location")
+    })
+    Venue getVenueByName(String name);
+
 }

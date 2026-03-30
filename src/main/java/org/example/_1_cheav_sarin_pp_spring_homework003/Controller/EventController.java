@@ -88,12 +88,10 @@ public class EventController {
         String statusCode = isSuccess? "200": "404";
         String msg = isSuccess? "Deleted event with id "+ eventId  +"successfully":" Event not found";
         ApiResponse<String> response = ApiResponse.<String>builder()
-
                 .status(statusCode)
                 .message(msg)
                 .timestamp(LocalDateTime.now())
                 .build();
-
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 

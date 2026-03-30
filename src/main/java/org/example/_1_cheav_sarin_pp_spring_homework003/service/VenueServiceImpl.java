@@ -39,6 +39,10 @@ public class VenueServiceImpl implements VenueService {
 
     @Override
     public Venue createVenue(VenueRequest venueRequest) {
+        Venue venue = venueRepository.getVenueByName(venueRequest.getVenueName());
+        if (venue != null){
+            throw new BadRequestException("Venue name already exists");
+        }
             return  venueRepository.saveVenue(venueRequest);
         }
 
