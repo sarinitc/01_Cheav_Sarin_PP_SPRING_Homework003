@@ -8,15 +8,14 @@ import java.util.List;
 public interface AttendeeRepository {
     @Results(id = "attendeeMapper", value = {
             @Result(property = "attendeeId", column = "attendee_id"),
-            @Result(property = "attendeeName", column = "attendee_name"),
-            @Result(property = "email", column = "email")
+            @Result(property = "attendeeName", column = "attendee_name")
     })
     @Select("""
         SELECT * FROM attendees
         LIMIT #{size} OFFSET (#{page} - 1) * #{size}
     """)
-    List<Attendee> findAllAttendeeWithPagination(@Param("page") Integer page,
-                                                 @Param("size") Integer size);
+    List<Attendee> findAllAttendeeWithPagination(Integer page,
+                                                 Integer size);
     @Select("""
         SELECT * FROM attendees
         WHERE attendee_id = #{attendeeId}
@@ -42,11 +41,13 @@ public interface AttendeeRepository {
 """)
     int updateAttendee(@Param("id") Integer attendeeId,
                        @Param("req") AttendeeRequest attendeeRequest);
-
     @Delete("""
     DELETE FROM attendees
    WHERE attendee_id = #{id}
 """)
+
+
+
     void deleteAttendeeById(Integer attendeeId);
 }
 

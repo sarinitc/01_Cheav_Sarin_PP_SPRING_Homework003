@@ -4,17 +4,15 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-
-public class Event {
-    private Integer eventId;
+@AllArgsConstructor
+public class EventResponse {
     private String eventName;
-    private LocalDateTime eventDate;
-    private Venue venue;
- private List<Attendee> attendees;
+    private LocalDate eventDate;
+    private Integer venueId;
+    private List<Integer> attendeeId;
 }

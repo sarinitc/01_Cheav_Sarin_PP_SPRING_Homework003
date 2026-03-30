@@ -66,9 +66,7 @@ public class VenueController {
     public ResponseEntity<ApiResponse<Venue>> updateVenue(
             @PathVariable("venueId") Integer venueId,
             @RequestBody VenueRequest venueRequest) {
-
         Venue venue = venueService.updateVenue(venueId,venueRequest);
-
         ApiResponse<Venue> response = ApiResponse.<Venue>builder()
                 .status("Created")
                 .message("Venue updated successfully")
@@ -80,18 +78,14 @@ public class VenueController {
     @DeleteMapping("/{venueId}")
     public ResponseEntity<ApiResponse<String>> deleteVenue(
             @PathVariable("venueId") Integer venueId) {
-
         Boolean isSuccess = venueService.deleteVenueById(venueId);
         String statusCode = isSuccess? "200": "404";
         String msg = isSuccess? "Deleted venue with id "+ venueId  +"successfully":" Venue not found";
         ApiResponse<String> response = ApiResponse.<String>builder()
-
                 .status(statusCode)
                 .message(msg)
-//                .payload("Deleted ID: " + attendeeId)
                 .timestamp(LocalDateTime.now())
                 .build();
-
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 }
